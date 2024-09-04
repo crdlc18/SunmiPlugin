@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="cordova-plugin-sunmi-printer"
+        version="1.0.0">
+    
+    <name>SunmiPrinter</name>
+    <description>Cordova Plugin for Sunmi Printer</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, sunmi, printer</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=7.0.0" />
+    </engines>
+
+    <platform name="android">
+        <!-- Path to the Java source file -->
+        <source-file src="src/android/SunmiPrinter.java" target-dir="src/com/chelseatravel/sunmi" />
+        
+        <!-- Dependency for Sunmi Printer library -->
+        <framework src="com.sunmi:printerlibrary:1.0.13" />
+        
+       
+
+        <!-- Optional: Add custom configuration if needed -->
+        <config-file target="AndroidManifest.xml" parent="application">
+            <!-- Add any additional configuration or service declarations here -->
+        </config-file>
+    </platform>
+
+</plugin>

@@ -1,0 +1,20 @@
+{
+    "name": "cordova-plugin-sunmi-printer",
+    "version": "1.0.0",
+    "description": "Cordova Plugin for Sunmi Printer",
+    "cordova": {
+      "id": "cordova-plugin-sunmi-printer",
+      "platforms": [
+        "android"
+      ]
+    },
+    "keywords": [
+      "cordova",
+      "sunmi",
+      "printer"
+    ],
+    "engines": {
+      "cordova": ">=7.0.0"
+    }
+  }
+  
