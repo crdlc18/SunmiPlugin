@@ -12,20 +12,23 @@ public class SunmiPrinter extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("printText")) {
+        if (action.equals("bindPrinterService")) {
+            bindPrinterService(callbackContext);
+            return true;
+        } else if (action.equals("printText")) {
             String text = args.getString(0);
-            bindPrinterService(cordova.getContext(), text, callbackContext);
+            printText(text, callbackContext);
             return true;
         }
         return false;
     }
 
-    private void bindPrinterService(Context context, final String text, final CallbackContext callbackContext) {
+    private void bindPrinterService(CallbackContext callbackContext) {
         InnerPrinterCallback innerPrinterCallback = new InnerPrinterCallback() {
             @Override
             protected void onConnected(SunmiPrinterService service) {
                 sunmiPrinterService = service;
-                printText(text, callbackContext);
+                callbackContext.success("Printer service connected");
             }
 
             @Override
@@ -35,7 +38,7 @@ public class SunmiPrinter extends CordovaPlugin {
             }
         };
 
-        boolean result = InnerPrinterManager.getInstance().bindService(context, innerPrinterCallback);
+        boolean result = InnerPrinterManager.getInstance().bindService(cordova.getContext(), innerPrinterCallback);
         if (!result) {
             callbackContext.error("Failed to bind printer service");
         }
@@ -57,22 +60,22 @@ public class SunmiPrinter extends CordovaPlugin {
     private class InnerResultCallback extends com.sunmi.peripheral.printer.InnerResultCallback.Stub {
         @Override
         public void onRunResult(boolean isSuccess) throws RemoteException {
-            // Handle the result of the printing action
+            // Handle result
         }
 
         @Override
         public void onReturnString(String result) throws RemoteException {
-            // Handle any string returned by the printer service
+            // Handle return string
         }
 
         @Override
         public void onRaiseException(int code, String msg) throws RemoteException {
-            // Handle exceptions raised during printing
+            // Handle exception
         }
 
         @Override
         public void onPrintResult(int code, String msg) throws RemoteException {
-            // Handle the actual print result
+            // Handle print result
         }
     }
 }
