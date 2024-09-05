@@ -19,12 +19,18 @@
         <!-- Dependency for Sunmi Printer library -->
         <framework src="com.sunmi:printerlibrary:1.0.13" />
         
-       
+        <!-- Permissions required by the plugin -->
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+            <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+        </config-file>
 
         <!-- Optional: Add custom configuration if needed -->
         <config-file target="AndroidManifest.xml" parent="application">
             <!-- Add any additional configuration or service declarations here -->
         </config-file>
     </platform>
-
 </plugin>

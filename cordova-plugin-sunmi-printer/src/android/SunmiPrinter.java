@@ -1,11 +1,13 @@
 package com.chelseatravel.sunmi;
 
-import android.content.Context;
-import android.os.RemoteException;
-import org.apache.cordova.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
 import com.sunmi.peripheral.printer.InnerPrinterCallback;
 import com.sunmi.peripheral.printer.InnerPrinterManager;
 import com.sunmi.peripheral.printer.SunmiPrinterService;
+import android.os.RemoteException;
 
 public class SunmiPrinter extends CordovaPlugin {
     private SunmiPrinterService sunmiPrinterService;
@@ -47,35 +49,33 @@ public class SunmiPrinter extends CordovaPlugin {
     private void printText(String text, CallbackContext callbackContext) {
         if (sunmiPrinterService != null) {
             try {
-                sunmiPrinterService.printText(text, new InnerResultCallback());
+                sunmiPrinterService.printText(text, new com.sunmi.peripheral.printer.InnerResultCallback.Stub() {
+                    @Override
+                    public void onRunResult(boolean isSuccess) throws RemoteException {
+                        // Handle result
+                    }
+
+                    @Override
+                    public void onReturnString(String result) throws RemoteException {
+                        // Handle return string
+                    }
+
+                    @Override
+                    public void onRaiseException(int code, String msg) throws RemoteException {
+                        // Handle exception
+                    }
+
+                    @Override
+                    public void onPrintResult(int code, String msg) throws RemoteException {
+                        // Handle print result
+                    }
+                });
                 callbackContext.success("Printed: " + text);
             } catch (RemoteException e) {
                 callbackContext.error("Error printing text: " + e.getMessage());
             }
         } else {
             callbackContext.error("Sunmi Printer Service is not connected");
-        }
-    }
-
-    private class InnerResultCallback extends com.sunmi.peripheral.printer.InnerResultCallback.Stub {
-        @Override
-        public void onRunResult(boolean isSuccess) throws RemoteException {
-            // Handle result
-        }
-
-        @Override
-        public void onReturnString(String result) throws RemoteException {
-            // Handle return string
-        }
-
-        @Override
-        public void onRaiseException(int code, String msg) throws RemoteException {
-            // Handle exception
-        }
-
-        @Override
-        public void onPrintResult(int code, String msg) throws RemoteException {
-            // Handle print result
         }
     }
 }
